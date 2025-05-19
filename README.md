@@ -19,6 +19,10 @@ Feats:
 * Can mark movies as watched 
 * No multiple users 
 
+```sql
+UPDATE users SET first_name = 'John' WHERE surname = 'Smith';
+```
+
 # R2: two tables 
 
 * Support multiple users 
