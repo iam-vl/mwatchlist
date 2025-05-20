@@ -21,6 +21,8 @@ Feats:
 
 ```sql
 UPDATE users SET first_name = 'John' WHERE surname = 'Smith';
+DELETE FROM movies; -- Delete all
+DELETE FROM users WHERE surname = 'Smith';
 ```
 
 # R2: two tables 
