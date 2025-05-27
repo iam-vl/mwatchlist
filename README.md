@@ -27,6 +27,23 @@ DELETE FROM users WHERE surname = 'Smith';
 
 # R2: two tables 
 
-* Support multiple users 
+```sql 
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    first_name TEXT,
+    surname TEXT
+);
+CREATE TABLE accounts (
+    id INTEGER PRIMARY KEY,
+    holder_id INTEGER,
+    number TEXT,
+    FOREIGN KEY(holder_id) REFERENCES users(id)
+);
+```
 
 # R3: Three tables 
+
+Can do this, but not needing it. 
+```
+INTEGER PRIMARY KEY AUTOINCREMENT
+```
