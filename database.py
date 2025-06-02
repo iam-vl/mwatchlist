@@ -6,7 +6,7 @@ CREATE_MOVIES_TABLE = """CREATE TABLE IF NOT EXISTS movies (
     title TEXT, 
     release_timestamp REAL
 );"""
-CREATE_USERS_TABLE = """CREATE TABLE IF NOT EXISTS USERS (
+CREATE_USERS_TABLE = """CREATE TABLE IF NOT EXISTS users (
     username TEXT PRIMARY KEY
 );"""
 CREATE_WATCHED_TABLE = """CREATE TABLE IF NOT EXISTS watched (
@@ -29,12 +29,15 @@ INSERT_MOVIES = """INSERT INTO movies
 INSERT_USER = """INSERT INTO users (username) VALUES(?);"""
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;" 
-SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE watcher_name = ?;"
-SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;
+SELECT_WATCHED_MOVIES = """
+SELECT m.* FROM movies m 
+JOIN watched w ON m.id = w.movie_id
+JOIN users u ON u.username = w.user_username
+WHERE u.username = ?;"""
+# SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE watcher_name = ?;"
+SET_MOVIE_WATCHED = """UPDATE movies SET watched = 1 WHERE title = ?;"""
 INSERT_WATCHED_MOVIE = """INSERT INTO watched (user_username, movie_id) VALUES (?, ?);"""
 DELETE_MOVIE = "DELETE FROM movies WHERE title = ?;"
-
-
 
 conn = sqlite3.connect("data.db")
 
@@ -48,7 +51,7 @@ def add_movie(title, release_timestamp):
     with conn:
         conn.execute(INSERT_MOVIES, (title, release_timestamp))
 
-def add_user():
+def add_user(username):
     with conn:
         conn.execute(INSERT_USER, (username,))
 

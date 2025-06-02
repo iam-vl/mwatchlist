@@ -47,3 +47,21 @@ Can do this, but not needing it.
 ```
 INTEGER PRIMARY KEY AUTOINCREMENT
 ```
+Joins: 
+```sql
+SELECT * FROM users JOIN accounts ON users.id = accounts.holder_id;
+
+SELECT users.*, accounts.number
+FROM users JOIN accounts 
+ON users.id = accounts.holder_id;
+```
+
+Example 3: 
+
+```sql
+SELECT * FROM movies m 
+JOIN watched w ON m.id = w.movie_id
+JOIN users u ON u.username = w.user_username
+WHERE u.username = 'Jose';
+```
+
